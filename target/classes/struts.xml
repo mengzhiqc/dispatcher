@@ -9,9 +9,9 @@
 		<action name="index" class="com.aifang.loupan.IndexAction">
 			<result>/jsp/index.jsp</result>
 		</action>
-		<action name="helloWorld" class="helloWorldAction"> 
-			<result name="input">/jsp/index.jsp</result>
-			<result>/jsp/helloWorld.jsp</result>
+		<action name="userHomeIndex" class="com.aifang.loupan.user.IndexAction">
+			<result>/jsp/user/index.jsp</result>
 		</action>
+		
 	</package>
 </struts>

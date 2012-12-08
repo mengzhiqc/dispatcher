@@ -43,10 +43,10 @@
 		<div class='container'>
 			<ul class="nav nav-tabs">
   				<li class="active">
-    				<a href="#">Home</a>
+    				<a href="/dispatcher/">Home</a>
   				</li>
-  				<li><a href="#">任务列表</a></li>
-  				<li><a href="#">近期任务</a></li>
+  				<li><a href="/dispatcher/">任务列表</a></li>
+  				<li><a href="/dispatcher/userHomeIndex.action">用户中心</a></li>
 			</ul>
 			<decorator:body />
         </div>
