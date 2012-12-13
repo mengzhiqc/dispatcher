@@ -12,34 +12,6 @@
     <decorator:head/>
 </head>
 <body>	
-	<!-- <div class="navbar navbar-fixed-top navbar-inverse">
-            <div class='navbar-inner'>
-                <div class="container">
-                    <a class="brand" href="/">DISPATCHER</a>
-                    <div class="nav-collapse">
-                        <ul class="nav">
-							<li class="active"><a href="/">首页</a></li>                           
-							<li class="divider-vertical"></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle">任务</a>
-                                <ul class="dropdown-menu">
-                                  <li><a href="/project/">My Task</a></li>
-                                  <li><a href="/webgit/index">Latest Week</a></li>
-                                </ul>
-                            </li>
-                       </ul>
-                    </div>
-                    <div class="nav-collapse">
-                    	<ul class="nav pull-right">
-                           <li><a href='/login'>[ Login ]</a></li>
-			        	</ul>
-                	</div>
-                </div>
-            </div>
-        </div> -->
-        
-
-       
 		<div class='container'>
 			<ul class="nav nav-tabs">
   				<li class="active">

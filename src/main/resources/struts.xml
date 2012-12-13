@@ -13,5 +13,10 @@
 			<result>/jsp/user/index.jsp</result>
 		</action>
 		
+		<action name="login" class="com.aifang.loupan.user.LoginAction">
+			<result name="success">/jsp/user/login.jsp</result>
+			<result name="loginSuccess">/jsp/user/index.jsp</result>
+		</action>
+		
 	</package>
 </struts>
