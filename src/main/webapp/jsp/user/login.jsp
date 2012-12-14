@@ -13,19 +13,23 @@
 	<div class="row">
 		<hr/>
 		<div class="span6">
-			<table class='table'>
-				<tbody>
-					<tr>
-					<td>用户名:</td><td><input id='username' name='username' type='input' placeholder='请输入用户名'/></td>
-					</tr>
-					<tr>
-					<td>密码:</td><td><input id='password' name='password' type='input' placeholder='请输入密码'/></td>
-					</tr>
-					<tr>
-					<td></td><td><a class='btn btn-primary' id='loginSubmit' href='javascript:;'>登 录</a> &nbsp;&nbsp;<a href='/'>注  册</a></td>
-					</tr>
-				</tbody>
-			</table>
+					<s:form action='login.action' method='post' >
+					<table>
+						<tr>
+							<td><s:textfield name="username" label="用户名" /></td>
+						</tr>
+						<tr>
+							<td><s:textfield name="password" label="密码" /></td>
+						</tr>
+						<tr>
+							<td><s:submit align="middle" value="登录" cssClass="btn btn-primary" id="loginSubmit" action="/dispatcher/login.action" />
+								
+							</td>
+						</tr>
+					</table>
+					
+					<a href='/'>注  册</a>
+					</s:form>
 		</div>
 		<div class="span3"></div>
 	</div>

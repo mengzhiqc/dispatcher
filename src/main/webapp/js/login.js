@@ -15,7 +15,7 @@ $('document').ready(function(){
 		data.username = $('#username').val();
 		data.password = $('#password').val();
 		$.post(loginUrl,data,function(response){
-			alert(response);
+			console.log(response);
 			if (response == 'loginSuccess'){
 				alert("登录成功");
 				window.location.href = indexUrl;

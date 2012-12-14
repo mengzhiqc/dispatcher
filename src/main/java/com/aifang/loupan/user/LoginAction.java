@@ -1,6 +1,11 @@
 package com.aifang.loupan.user;
 
+import java.io.PrintWriter;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -20,11 +25,24 @@ public class LoginAction extends ActionSupport {
 		// 判断请求类型，如果是post方式，为登录请求
 		Map params = ActionContext.getContext().getParameters();
 		if (params.containsKey("username")) {
-			String username = params.get("username").toString();
-			if ("" != username && null != username) {
-				LOG.debug("print log info");
-				return LOGINSUCCESS;
-			}
+			try{
+				HttpServletResponse response = ServletActionContext.getResponse();   
+				//设置字符集   
+				response.setCharacterEncoding("UTF-8");   
+				PrintWriter out = response.getWriter();   
+				String username = params.get("username").toString();
+				if ("" != username && null != username) {
+					LOG.debug("print log info");
+					out.print(LOGINSUCCESS);
+					out.flush();
+					out.close();
+					return null;
+				}
+				 
+				
+				  
+			}catch(Exception e){}
+			
 		}
 
 		return SUCCESS;
