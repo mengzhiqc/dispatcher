@@ -18,7 +18,6 @@ package com.aifang.loupan;
 import com.opensymphony.xwork2.ActionSupport;
 import java.util.Date;
 
-import org.apache.struts2.config.Namespace;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
