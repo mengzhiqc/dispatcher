@@ -6,14 +6,15 @@
 
 <struts>
 	<package name="myPackage" extends="struts-default">
-		<action name="index" class="com.aifang.loupan.IndexAction">
+		<action name="index" class="com.aifang.controller.task.IndexAction">
 			<result>/jsp/index.jsp</result>
 		</action>
-		<action name="userHomeIndex" class="com.aifang.loupan.user.IndexAction">
+		
+		<action name="userHomeIndex" class="com.aifang.controller.user.IndexAction">
 			<result>/jsp/user/index.jsp</result>
 		</action>
 		
-		<action name="login" class="com.aifang.loupan.user.LoginAction">
+		<action name="login" class="com.aifang.controller.user.LoginAction">
 			<result name="success">/jsp/user/login.jsp</result>
 			<result name="loginSuccess">/jsp/user/index.jsp</result>
 		</action>

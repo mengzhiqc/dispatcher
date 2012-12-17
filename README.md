@@ -16,7 +16,8 @@ dispatcher
 	前台页面使用bootstrap
 		
 #参加任务人员
-	*孟智
+	* 孟智
+	* 廖麒麟
 
 #功能具体需求
 	页面功能总述
@@ -33,3 +34,7 @@ dispatcher
 		|-改 修改已接任务 主要是文档、完成阶段等等
 		|-查 查询我的任务
 	|-OAuth接口
+	
+* OAuth接口
+	* anJuke OAuth wiki文档地址： [OAuth Wiki维护](http://wiki.corp.anjuke.com/index.php?title=Oauth) 	
+	* 

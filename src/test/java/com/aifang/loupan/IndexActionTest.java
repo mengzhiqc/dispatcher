@@ -17,6 +17,7 @@ package com.aifang.loupan;
 
 import junit.framework.TestCase;
 
+import com.aifang.controller.task.IndexAction;
 import com.opensymphony.xwork2.Action;
 
 /**
