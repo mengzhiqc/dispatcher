@@ -45,11 +45,12 @@ public class LoginAction extends ActionSupport {
 		}
 		// 判断请求类型，如果是post方式，为登录请求
 		Map params = ActionContext.getContext().getParameters();
-		if (params.containsKey("username")) {
+		if (null != params && params.containsKey("username")) {
 			try{
 				HttpServletResponse response = ServletActionContext.getResponse();   
 				//设置字符集   
-				response.setCharacterEncoding("UTF-8");   
+				response.setCharacterEncoding("UTF-8");  
+				response.setContentType("text/plain");
 				PrintWriter out = response.getWriter();   
 				String username = params.get("username").toString();
 				if ("" != username && null != username) {
@@ -58,10 +59,10 @@ public class LoginAction extends ActionSupport {
 					out.close();
 					return null;
 				}
-				 
-				
-				  
-			}catch(Exception e){}
+  
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 			
 		}
 

@@ -64,7 +64,7 @@ public class OAuth implements IOAuth {
 	
 	public String getTempToken(){
 		String oauthUrl = PropertiesUtil.pps.getProperty("oauth.url");
-		String rs = CurlUtil.getUrlResponse(oauthUrl);
+		String rs = CurlUtil.getUrlResponse("http://baidu.com");
 		System.out.println(oauthUrl);
 		String tempToken = "";
 		return tempToken;

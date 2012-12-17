@@ -13,13 +13,13 @@
 	<div class="row">
 		<hr/>
 		<div class="span6">
-					<s:form action='login' method='post' >
+					<s:form action='login' method='post' theme='xhtml'>
 					<table>
 						<tr>
 							<td><s:textfield name="username" label="用户名" /></td>
 						</tr>
 						<tr>
-							<td><s:textfield name="password" label="密码" /></td>
+							<td><s:password name="password" label="密码" /></td>
 						</tr>
 						<tr>
 							<td><s:submit align="middle" value="登录" cssClass="btn btn-primary" id="loginSubmit" action="login" />

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aifang.loupan;
+package com.aifang.test.task;
 
 import junit.framework.TestCase;
 
@@ -30,4 +30,6 @@ public class IndexActionTest extends TestCase {
         String result = action.execute();
         assertEquals(Action.SUCCESS, result);
     }
+    
+    
 }
