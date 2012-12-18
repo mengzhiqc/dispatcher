@@ -8,7 +8,12 @@
 <title>欢迎访问用户中心</title>
 </head>
 <body>
-	<h4>hi <s:property value="username"/>,欢迎访问用户中心</h4>
-	<div class=''>现在就去<a href='/dispatcher/login.action'>登录</a>。</div>
+	<s:set name="username" value="username" />
+	<s:if test="%{#username != null}">
+		<h4>hi <s:property value="username"/>,欢迎访问用户中心</h4>
+	</s:if>
+	<s:else>
+		<div class=''>现在就去<a href='/dispatcher/login.action'>登录</a>。</div>
+	</s:else>
 </body>
 </html>

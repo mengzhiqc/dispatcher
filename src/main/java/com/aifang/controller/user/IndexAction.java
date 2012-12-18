@@ -7,6 +7,11 @@ package com.aifang.controller.user;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+
+import com.aifang.util.LogUtil;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -50,13 +55,11 @@ public class IndexAction extends ActionSupport {
 		
 		try{
 			ActionContext ctx = ActionContext.getContext();
-			Map application = ctx.getApplication();
-			Map params = ctx.getParameters();
-			if(params.containsKey("username")){
-				username = (String) params.get("username");
-			}else{
-				username = "lenye01";
-			}
+			HttpServletRequest req = ServletActionContext.getRequest();
+			String authInfo = (String) ctx.getSession().get("dispatcher_user_session");
+			LogUtil.debug("myinfo:"+authInfo);
+			username = authInfo;
+			return SUCCESS;
 		} catch(Exception e){
 			
 		}

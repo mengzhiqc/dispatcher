@@ -13,6 +13,7 @@ import org.apache.struts2.interceptor.CookiesAware;
 
 import com.aifang.bean.User;
 import com.aifang.biz.OAuth;
+import com.aifang.util.LogUtil;
 import com.aifang.util.StringUtil;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -72,11 +73,12 @@ public class LoginAction extends ActionSupport {
 				Cookie authInfo = new Cookie("authInfo",StringUtil.Base64Encoder(user.getUsername()));
 				authInfo.setMaxAge(60*30);
 				response.addCookie(authInfo);
-					
-					out.print(user.getUsername());
-					out.flush();
-					out.close();
-					return null;
+				
+				Map session = ac.getSession();
+				session.put("dispatcher_user_session", user.getUsername());
+				LogUtil.debug("myinfo:"+session.toString());
+				
+				return LOGINSUCCESS;
 				
   
 			}catch(Exception e){
@@ -96,6 +98,10 @@ public class LoginAction extends ActionSupport {
 			
 		} else {
 			//第一步：重定向到获取临时令牌页面,传入下一个页面带response_type参数，值为需要传入的code
+			
+			if(ac.getSession().containsKey("dispatcher_user_session")){
+				return LOGINSUCCESS;
+			}
 			try{
 				response.setCharacterEncoding("UTF-8");
 				String url = oAuth.getRedirectToTempTokenUrl();
