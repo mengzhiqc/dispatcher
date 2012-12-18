@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * 封装curl
@@ -23,6 +26,7 @@ public class CurlUtil {
 	 */
 	public static String getUrlResponse(String url) {
 		try {
+			//url="http://baidu.com";
 			URL url1 = new URL(url);
 			URLConnection uc = url1.openConnection();
 			InputStream in = uc.getInputStream();
@@ -58,5 +62,25 @@ public class CurlUtil {
 			}
 		}
 		return sb.toString();
+	}
+	
+	/**
+	 * build query uri
+	 * @param uri
+	 * @return
+	 */
+	public static String buildUriString(HashMap<String,String> uri){
+		StringBuilder sb = new StringBuilder();
+		HashMap<String,String> data = uri;
+		if(data.size()>0){
+			Iterator iter = data.entrySet().iterator();
+			while(iter.hasNext()){
+				Map.Entry<String, String> entry = (Map.Entry<String, String>)iter.next();
+				String key = entry.getKey();
+				String val = entry.getValue();
+				sb.append(key+"="+val+"&");
+			}
+		}
+		return sb.toString().substring(0, sb.length()-1);
 	}
 }

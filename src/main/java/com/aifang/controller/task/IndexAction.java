@@ -41,4 +41,5 @@ public class IndexAction extends ActionSupport {
         now = new Date(System.currentTimeMillis());
         return SUCCESS;
     }
+    
 }
