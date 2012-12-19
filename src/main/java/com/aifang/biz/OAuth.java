@@ -12,6 +12,11 @@ import com.aifang.bean.User;
 import com.aifang.util.CurlUtil;
 import com.aifang.util.PropertiesUtil;
 
+/**
+ * 安居客OAuth验证
+ * @author kavin
+ *
+ */
 @Component(value = "oAuth")
 public class OAuth implements IOAuth {
 
@@ -53,19 +58,6 @@ public class OAuth implements IOAuth {
 
 	}
 
-	public String queryStringBuilder(Map<String, String> data) {
-		if (data.isEmpty()) {
-			return "";
-		}
-		StringBuilder sb = new StringBuilder();
-		sb.append("?");
-		for (String key : data.keySet()) {
-			sb.append(key + "=" + data.get(key) + "&");
-		}
-		sb.deleteCharAt(sb.length() - 1);
-		return sb.toString();
-
-	}
 
 	/**
 	 * 获取临时令牌,以下为PHP做法 header("HTTP/1.1 302 Found"); $array = array(

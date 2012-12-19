@@ -70,13 +70,19 @@ public class Users {
 	private Integer created;
 	private String last_update;
 
+	/**
+	 * 添加用户
+	 * 
+	 * @param Users
+	 *            userInfo
+	 */
 	public void addUser(Users userInfo) {
 		Transaction trns = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			LogUtil.debug(chinesename);
 			trns = session.beginTransaction();
-			
+
 			long currentTime = System.currentTimeMillis();
 			LogUtil.debug("currentTime:" + String.valueOf(currentTime / 1000));
 			userInfo.setCreated((int) (currentTime / 1000));
@@ -123,9 +129,39 @@ public class Users {
 		}
 		return rs;
 	}
+	
+	/**
+	 * 根据用户名获取用户信息
+	 * 
+	 * @param String username
+	 * @return List<Users> userinfos
+	 */
+
+	public List<Users> getUserInfosByUsername(String username) {
+		List<Users> rs =  null;
+		Transaction trns = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			trns = session.beginTransaction();
+			List<Users> users = session
+					.createQuery("from Users where username=:username")
+					.setString("username", username).list();
+			trns.commit();
+			return users;
+		} catch (RuntimeException e) {
+			if (trns != null) {
+				trns.rollback();
+			}
+		} finally {
+			session.flush();
+			session.close();
+		}
+		return rs;
+	}
 
 	/**
 	 * 根据UserId删除数据
+	 * 
 	 * @param int userId
 	 * @return int rs 删除的条数
 	 */
@@ -135,14 +171,15 @@ public class Users {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			trns = session.beginTransaction();
-			Query q = session.createQuery("DELETE Users  WHERE id=?").setInteger(0, userId);
+			Query q = session.createQuery("DELETE Users  WHERE id=?")
+					.setInteger(0, userId);
 			rs = q.executeUpdate();
 			trns.commit();
 
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			if (trns != null) {
-				LogUtil.info("用户删除失败！用户ID是："+String.valueOf(userId));
+				LogUtil.info("用户删除失败！用户ID是：" + String.valueOf(userId));
 				trns.rollback();
 			}
 		} finally {
@@ -151,29 +188,32 @@ public class Users {
 		}
 		return rs;
 	}
-	
+
 	/**
 	 * 根据username删除数据
-	 * @param String userName
+	 * 
+	 * @param String
+	 *            userName
 	 * @return int rs 删除条数
 	 */
 	public int deleteUserByUserName(String userName) {
 		int rs = 0;
 		Transaction trns = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		try{
+		try {
 			trns = session.beginTransaction();
-			Query q = session.createQuery("DELETE Users WHERE username=?").setString(0, userName);
+			Query q = session.createQuery("DELETE Users WHERE username=?")
+					.setString(0, userName);
 			rs = q.executeUpdate();
 			trns.commit();
-		}catch(RuntimeException e){
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			if (trns != null) {
-				LogUtil.info("用户删除失败！用户username是："+userName);
+				LogUtil.info("用户删除失败！用户username是：" + userName);
 				trns.rollback();
 			}
-			
-		}finally{
+
+		} finally {
 			session.flush();
 			session.close();
 		}

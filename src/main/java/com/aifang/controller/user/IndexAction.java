@@ -53,16 +53,14 @@ public class IndexAction extends ActionSupport {
 		this.email = email;
 	}
 	
-	@Resource(name="users")
+	@Resource
 	private Users users;
 	
 	public String execute() {
-		
 		try{
 			ActionContext ctx = ActionContext.getContext();
 			HttpServletRequest req = ServletActionContext.getRequest();
 			String authInfo = (String) ctx.getSession().get("dispatcher_user_session");
-			LogUtil.debug("myinfo:"+authInfo);
 			username = authInfo;
 			return SUCCESS;
 		} catch(Exception e){

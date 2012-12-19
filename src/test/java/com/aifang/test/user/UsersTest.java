@@ -1,9 +1,15 @@
 package com.aifang.test.user;
 
 
+import java.util.List;
+
+import org.junit.Assert;
+
+import com.aifang.biz.LoginBiz;
 import com.aifang.model.Users;
 
 
+import com.aifang.test.fork.UserFork;
 import com.aifang.util.BasicTestCase;
 import com.aifang.util.LogUtil;
 
@@ -17,15 +23,34 @@ public class UsersTest extends BasicTestCase {
 	 */
 	public void testAddUser() throws Exception {
 		Users users = (Users) getBean("users");
-		Users toInsertUsers = new Users();
-		toInsertUsers.setChinesename("孟智");
-		toInsertUsers.setUsername("lenyemeng");
-		toInsertUsers.setEmail("lenyemeng@anjuke.com");
+		Users toInsertUsers = UserFork.forkLenyemeng();
+		users.deleteUserByUserName(toInsertUsers.getUsername());
 		users.addUser(toInsertUsers);
-		Users user = users.getUserInfoByUsername("lenyemeng");
-		assertEquals("lenyemeng@anjuke.com", user.getEmail());
-		users.deleteUserById(user.getId());
+		List<Users> userlist = users.getUserInfosByUsername(toInsertUsers.getUsername());
+		assertEquals(1, userlist.size());
+		users.deleteUserByUserName(toInsertUsers.getUsername());
 	}
+	
+	/**
+	 * 测试SaveOrUpdateUser方法成功与否
+	 */
+	public void testSaveOrUpdateUser() {
+		LoginBiz logBiz = (LoginBiz) getBean("loginBiz");
+		Users users = (Users) getBean("users");
+		Users forkUser = UserFork.forkLenyemeng();
+		users.deleteUserByUserName(forkUser.getUsername());
+		//测试传入null的情况
+		logBiz.saveOrUpdateUser(null);
+		logBiz.saveOrUpdateUser(forkUser);
+		List<Users> userlist = users.getUserInfosByUsername(forkUser.getUsername());
+		Assert.assertNotNull(userlist);
+		Assert.assertEquals(1, userlist.size());
+		logBiz.saveOrUpdateUser(forkUser);
+		List<Users> userlist2 = users.getUserInfosByUsername(forkUser.getUsername());
+		Assert.assertNotNull(userlist2);
+		Assert.assertEquals(1, userlist2.size());
+	}
+	
 
 	
 }
