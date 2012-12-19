@@ -13,5 +13,6 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 	<!-- Example of SAF2 action instantiated by Spring -->
 	<context:component-scan base-package="com.aifang.biz"/>
+	<context:component-scan base-package="com.aifang.model"/>
 </beans>
 

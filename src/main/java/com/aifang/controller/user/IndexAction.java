@@ -7,10 +7,12 @@ package com.aifang.controller.user;
 
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.aifang.model.Users;
 import com.aifang.util.LogUtil;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -51,9 +53,13 @@ public class IndexAction extends ActionSupport {
 		this.email = email;
 	}
 	
+	@Resource(name="users")
+	private Users users;
+	
 	public String execute() {
 		
 		try{
+			users.addUser("kavin", "lenye01@gmail.com", "孟2");
 			ActionContext ctx = ActionContext.getContext();
 			HttpServletRequest req = ServletActionContext.getRequest();
 			String authInfo = (String) ctx.getSession().get("dispatcher_user_session");

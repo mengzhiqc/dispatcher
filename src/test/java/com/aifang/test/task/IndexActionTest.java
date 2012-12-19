@@ -15,9 +15,11 @@
  */
 package com.aifang.test.task;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import com.aifang.controller.task.IndexAction;
+import com.aifang.util.LogUtil;
 import com.opensymphony.xwork2.Action;
 
 /**
@@ -26,9 +28,11 @@ import com.opensymphony.xwork2.Action;
 public class IndexActionTest extends TestCase {
     
     public void testIndexAction() throws Exception {
+    	String path = (getClass().getClassLoader().getResource("").toURI()).getPath();
+    	LogUtil.info(path);
         IndexAction action = new IndexAction();
         String result = action.execute();
-        assertEquals(Action.SUCCESS, result);
+        Assert.assertEquals(Action.SUCCESS, result);
     }
     
     

@@ -37,4 +37,22 @@ dispatcher
 	
 * OAuth接口
 	* anJuke OAuth wiki文档地址： [OAuth Wiki维护](http://wiki.corp.anjuke.com/index.php?title=Oauth) 	
-	* 
+	
+	* Action类 com.aifang.controller.user.LoginAction 处理了整个登陆认证的过程
+	>TODO：认证的操作考虑做成intecepter去做，应该可以在结构上更好的理解一点。
+	
+* User表设计 
+ 
+  因为使用了OAUTH登陆，在第一次登陆的时候，会往本地数据库users表插入一条数据，表结构初步设计如下：
+	<pre>
+    create table `users` (
+		id int not null auto_increment comment '主键自增ID',
+		username varchar(100) not null default '' comment '用户名,同oauth中的username',
+		chinesename varchar(100) not null default '' comment '中文名',
+		email varchar(100) not null default '' comment 'Email地址',
+		created int comment '创建时间',
+		last_update datetime comment '最后更新时间' ,
+		primary key(id)
+	) engine=innodb default charset=utf8 comment='用户基本表';
+	</pre>
+	
