@@ -59,7 +59,6 @@ public class IndexAction extends ActionSupport {
 	public String execute() {
 		
 		try{
-			users.addUser("kavin", "lenye01@gmail.com", "孟2");
 			ActionContext ctx = ActionContext.getContext();
 			HttpServletRequest req = ServletActionContext.getRequest();
 			String authInfo = (String) ctx.getSession().get("dispatcher_user_session");

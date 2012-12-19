@@ -12,7 +12,9 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.CookiesAware;
 
 import com.aifang.bean.User;
+import com.aifang.biz.LoginBiz;
 import com.aifang.biz.OAuth;
+import com.aifang.model.Users;
 import com.aifang.util.LogUtil;
 import com.aifang.util.StringUtil;
 import com.opensymphony.xwork2.ActionContext;
@@ -37,6 +39,8 @@ public class LoginAction extends ActionSupport {
 
 	@Resource(name="oAuth")
 	private OAuth oAuth;
+	@Resource
+	private LoginBiz loginBiz;
 
 
 
@@ -58,13 +62,17 @@ public class LoginAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
 		if(params.containsKey("access_token")){
-			//第三步：到该流程完成，正式验证通过，做这个系统需要做的－－种cookie，并在第一步进行验证
+			//第三步：到该流程完成，正式验证通过，做这个系统需要做的－－种cookie，用于在第一步进行验证
 			try{
 				response.setCharacterEncoding("UTF-8");  
 				response.setContentType("text/plain");
 				PrintWriter out = response.getWriter();   
 				String accessToken = request.getParameter("access_token");
 				User user = oAuth.getFormatedUserInfo(accessToken);
+				Users userInfo = new Users();
+				userInfo.setUsername(user.getUsername());
+				userInfo.setChinesename("");
+				userInfo.setEmail("");
 				String guid = StringUtil.Md5(user.getUsername());
 				Cookie ci = new Cookie("guid",guid);
 				ci.setMaxAge(60*30);
@@ -76,7 +84,7 @@ public class LoginAction extends ActionSupport {
 				
 				Map session = ac.getSession();
 				session.put("dispatcher_user_session", user.getUsername());
-				LogUtil.debug("myinfo:"+session.toString());
+				loginBiz.saveOrUpdateUser(userInfo);
 				
 				return LOGINSUCCESS;
 				

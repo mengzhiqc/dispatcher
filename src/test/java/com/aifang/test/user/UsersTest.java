@@ -17,12 +17,14 @@ public class UsersTest extends BasicTestCase {
 	 */
 	public void testAddUser() throws Exception {
 		Users users = (Users) getBean("users");
-		users.addUser("lenyemeng", "lenyemeng@anjuke.com", "孟智");
+		Users toInsertUsers = new Users();
+		toInsertUsers.setChinesename("孟智");
+		toInsertUsers.setUsername("lenyemeng");
+		toInsertUsers.setEmail("lenyemeng@anjuke.com");
+		users.addUser(toInsertUsers);
 		Users user = users.getUserInfoByUsername("lenyemeng");
-		LogUtil.debug(user.getChinesename());
 		assertEquals("lenyemeng@anjuke.com", user.getEmail());
-		assertEquals("lenyemeng@anjuke.com", "lenyemeng@anjuke.com");
-
+		users.deleteUserById(user.getId());
 	}
 
 	
