@@ -78,6 +78,7 @@ public class Users extends DAO{
 	 *            userInfo
 	 */
 	public void addUser(Users userInfo) {
+		LogUtil.debug("UserInfo:"+userInfo.toString());
 		Transaction trns = null;
 		Session session = sessionFactory.openSession();
 		try {

@@ -11,7 +11,6 @@ import com.aifang.model.Users;
 
 import com.aifang.test.fork.UserFork;
 import com.aifang.util.BasicTestCase;
-import com.aifang.util.LogUtil;
 
 
 public class UsersTest extends BasicTestCase {
