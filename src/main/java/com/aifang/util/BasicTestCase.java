@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 
 public abstract class BasicTestCase extends TestCase {
 	
-	protected  ApplicationContext testContext ;
+	protected  static ApplicationContext testContext ;
 	
 	public void  setUp(){	
 		PropertiesUtil.pps = new Properties();
@@ -21,7 +21,9 @@ public abstract class BasicTestCase extends TestCase {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		testContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		if (null == testContext){
+			testContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		}
 	}
 	
 	public Object getBean(String beanName){

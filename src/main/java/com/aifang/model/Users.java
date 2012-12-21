@@ -9,11 +9,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
+import com.aifang.dao.DAO;
 import com.aifang.util.HibernateUtil;
 import com.aifang.util.LogUtil;
 
 @Component(value = "users")
-public class Users {
+public class Users extends DAO{
 
 	public Integer getId() {
 		return id;
@@ -78,7 +79,7 @@ public class Users {
 	 */
 	public void addUser(Users userInfo) {
 		Transaction trns = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		try {
 			LogUtil.debug(chinesename);
 			trns = session.beginTransaction();
@@ -96,7 +97,7 @@ public class Users {
 			trns.rollback();
 		} finally {
 			session.flush();
-			session.clear();
+			session.close();
 		}
 	}
 
@@ -111,7 +112,7 @@ public class Users {
 	public Users getUserInfoByUsername(String username) {
 		Users rs = null;
 		Transaction trns = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		try {
 			trns = session.beginTransaction();
 			List<Users> users = session
@@ -168,7 +169,7 @@ public class Users {
 	public int deleteUserById(int userId) {
 		int rs = 0;
 		Transaction trns = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		try {
 			trns = session.beginTransaction();
 			Query q = session.createQuery("DELETE Users  WHERE id=?")
@@ -199,8 +200,8 @@ public class Users {
 	public int deleteUserByUserName(String userName) {
 		int rs = 0;
 		Transaction trns = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
+		Session session = sessionFactory.openSession();
+		try{
 			trns = session.beginTransaction();
 			Query q = session.createQuery("DELETE Users WHERE username=?")
 					.setString(0, userName);
