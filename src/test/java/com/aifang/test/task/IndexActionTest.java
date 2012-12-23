@@ -15,13 +15,16 @@
  */
 package com.aifang.test.task;
 
+import org.junit.internal.runners.JUnit38ClassRunner;
+import org.junit.runner.RunWith;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import com.aifang.controller.task.IndexAction;
 import com.aifang.util.LogUtil;
 import com.opensymphony.xwork2.Action;
-
+@RunWith(JUnit38ClassRunner.class)
 /**
  * 
  */
