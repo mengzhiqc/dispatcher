@@ -1,8 +1,8 @@
 package com.aifang.dao;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,7 +25,7 @@ public abstract class DAO {
 	public Object findById(Integer id) {
 		Object rs = null;
 		Session session = sessionFactory.openSession();
-		rs = session.load(getClass(), id);
+		rs = session.get(getClass(), id);
 		return rs;
 	}
 
@@ -42,11 +42,22 @@ public abstract class DAO {
 		if (null != ids) {
 			Session session = sessionFactory.openSession();
 			for (int i : ids) {
-				Object returnAction = session.load(getClass(), i);
+				Object returnAction = session.get(getClass(), i);
 				rs.add(returnAction);
-				LogUtil.debug(returnAction.toString());
+				if (returnAction == null) {
+					LogUtil.debug("returnAction return NULL");
+				} else {
+					LogUtil.debug(returnAction.toString());
+				}
 			}
 		}
+		return rs;
+	}
+
+	public List<Object> findByWhere(HashMap<String, String> where) {
+		List<Object> rs = new LinkedList<Object>();
+		Session session = sessionFactory.openSession();
+
 		return rs;
 	}
 
@@ -55,7 +66,7 @@ public abstract class DAO {
 		LogUtil.info("Now Insert Model :" + model.toString());
 		if (null != model) {
 			Session session = sessionFactory.openSession();
-			org.hibernate.Transaction tran =  session.beginTransaction();
+			org.hibernate.Transaction tran = session.beginTransaction();
 			session.save(model);
 			try {
 				tran.commit();
@@ -64,20 +75,20 @@ public abstract class DAO {
 				if (tran != null) {
 					tran.rollback();
 				}
-			}  finally {
+			} finally {
 				session.flush();
 				session.close();
 			}
 		}
 		return rs;
 	}
-	
-	public Object updateOne(Object model){
+
+	public Object updateOne(Object model) {
 		Object rs = new Object();
 		LogUtil.info("Now Update Model :" + model.toString());
 		if (null != model) {
 			Session session = sessionFactory.openSession();
-			org.hibernate.Transaction tran =  session.beginTransaction();
+			org.hibernate.Transaction tran = session.beginTransaction();
 			session.update(model);
 			try {
 				tran.commit();
@@ -86,19 +97,19 @@ public abstract class DAO {
 				if (tran != null) {
 					tran.rollback();
 				}
-			}  finally {
+			} finally {
 				session.flush();
 				session.close();
 			}
 		}
-		return rs;	
+		return rs;
 	}
-	
-	public void delete(Object model){
+
+	public void delete(Object model) {
 		LogUtil.info("Now Update Model :" + model.toString());
 		if (null != model) {
 			Session session = sessionFactory.openSession();
-			org.hibernate.Transaction tran =  session.beginTransaction();
+			org.hibernate.Transaction tran = session.beginTransaction();
 			session.delete(model);
 			try {
 				tran.commit();
@@ -106,14 +117,32 @@ public abstract class DAO {
 				if (tran != null) {
 					tran.rollback();
 				}
-			}  finally {
+			} finally {
 				session.flush();
 				session.close();
 			}
 		}
 	}
-	
-	
+
+	public void truncateTable(String tableName) {
+		LogUtil.info("Warnning: Talbe" + tableName + "will be truncated");
+		if (null != tableName) {
+			Session session = sessionFactory.openSession();
+			org.hibernate.Transaction tran = session.beginTransaction();
+			session.createSQLQuery("truncate table ?").setString(0, tableName);
+
+			try {
+				tran.commit();
+			} catch (RuntimeException e) {
+				if (tran != null) {
+					tran.rollback();
+				}
+			} finally {
+				session.flush();
+				session.close();
+			}
+		}
+	}
 
 	/**
 	 * 获取hibernate的{link:SessionFactory}
