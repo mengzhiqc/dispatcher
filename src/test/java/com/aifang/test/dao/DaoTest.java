@@ -1,5 +1,6 @@
 package com.aifang.test.dao;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +11,7 @@ import junit.framework.Assert;
 import com.aifang.model.Users;
 import com.aifang.test.fork.UserFork;
 import com.aifang.util.BasicTestCase;
+import com.aifang.util.LogUtil;
 
 public class DaoTest extends BasicTestCase {
 
@@ -60,5 +62,17 @@ public class DaoTest extends BasicTestCase {
 		Assert.assertEquals(forkUser.getEmail(), findUser.getEmail());
 		users.deleteUserByUserName(forkUser.getUsername());
 		
+	}
+	
+	public void testFindByWhere(){
+		Users forkUser = UserFork.forkLenyemeng();
+		Users users = (Users)getBean("users");
+		users.insertOne(forkUser);
+		HashMap<String,String> where = new HashMap<String,String>();
+		where.put("username","lenyemeng");
+		List userList = users.findByWhere(null);
+//		Assert.assertEquals(true, (userList.size()>0));
+		List userList1 = users.findByWhere(where);
+		Assert.assertEquals(1, userList1.size());
 	}
 }

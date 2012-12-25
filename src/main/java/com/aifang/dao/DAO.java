@@ -1,11 +1,16 @@
 package com.aifang.dao;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.xwork.StringUtils;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
@@ -32,8 +37,7 @@ public abstract class DAO {
 	/**
 	 * 通过ID序列查询结果集
 	 * 
-	 * @param List
-	 *            <Integer> ids
+	 * @param List <Integer> ids
 	 * @return List<Object>
 	 */
 	public List<Object> findByIds(List<Integer> ids) {
@@ -54,10 +58,53 @@ public abstract class DAO {
 		return rs;
 	}
 
+	/**
+	 * 根据条件获取查询列表
+	 * @param where
+	 * @return
+	 */
 	public List<Object> findByWhere(HashMap<String, String> where) {
 		List<Object> rs = new LinkedList<Object>();
+		if(null != where && where.size() > 0){
+			Iterator it = (Iterator)where.entrySet().iterator();
+			List<String> conditionList = new LinkedList<String>();
+			while(it.hasNext()){
+				Map.Entry<String,String> entry = (Map.Entry<String,String>)it.next();
+				Object key = entry.getKey();
+				Object value = entry.getValue();
+				conditionList.add(key+"='"+value+"'");
+			}
+			rs = this.findByWhere(StringUtils.join(conditionList," and "));
+		}
+		
+		return rs;
+	}
+	
+	public List<Object> findByWhere(Object where){
+		List<Object> rs = new LinkedList<Object>();
 		Session session = sessionFactory.openSession();
-
+		Transaction tran = session.beginTransaction();
+		StringBuilder sb = new StringBuilder();
+		sb.append("from "+getClass().getSimpleName()+" ");
+		LogUtil.debug(sb.toString());
+		if(where instanceof String  && ((String)where).length() > 0){
+			sb.append("where ");
+			sb.append(where);
+			System.out.println(sb.toString());
+		}
+		Query q = session.createQuery(sb.toString());
+		try{
+			rs =  q.list();
+			tran.commit();
+			return rs;
+		}catch (RuntimeException e) {
+			if (tran != null) {
+				tran.rollback();
+			}
+		} finally {
+			session.flush();
+			session.close();
+		}
 		return rs;
 	}
 
@@ -66,7 +113,7 @@ public abstract class DAO {
 		LogUtil.info("Now Insert Model :" + model.toString());
 		if (null != model) {
 			Session session = sessionFactory.openSession();
-			org.hibernate.Transaction tran = session.beginTransaction();
+			Transaction tran = session.beginTransaction();
 			session.save(model);
 			try {
 				tran.commit();
