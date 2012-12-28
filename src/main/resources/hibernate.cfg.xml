@@ -5,7 +5,7 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://192.168.1.57/aifang_dispatcher?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</property>
+		<property name="connection.url">jdbc:mysql://localhost/aifang_dispatcher?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">aifang</property>
 		
