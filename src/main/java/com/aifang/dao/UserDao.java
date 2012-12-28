@@ -15,7 +15,7 @@ import com.aifang.util.LogUtil;
 import javax.annotation.Resource;
 
 @Component(value="userDao")
-public class UserDao extends DAO<UserDao,Users>{
+public class UserDao extends DAO<Users>{
 	
 	
 	/**

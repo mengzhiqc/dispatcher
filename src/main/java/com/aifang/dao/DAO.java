@@ -1,5 +1,7 @@
 package com.aifang.dao;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,17 +16,37 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+import org.springframework.stereotype.Repository;
 
 import com.aifang.util.LogUtil;
 
-public abstract class DAO <T,M> { //T为Dao的类型，M为Model类型
-	private M modelClass;
-	private String modelName = modelClass.getClass().getSimpleName();
-	
 
-	protected DAO(){
+public abstract class DAO <M> extends AbstractDao<M>{ //T为Dao的类型，M为Model类型
+	private Class<M> entityClass;
+	/**
+	 * @return the entityClass
+	 */
+	public Class<M> getEntityClass() {
+		if (entityClass == null) {   
+			entityClass = (Class<M>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];   
+		    }   
+		    return entityClass; 
+	}
+	
+	
+	public DAO(){
+		
 		
 	}
+																																																									
+	/**
+	 * @param entityClass the entityClass to set
+	 */
+	public void setEntityClass(Class<M> entityClass) {
+		this.entityClass = entityClass;
+	}
+
+
 
 	protected static SessionFactory sessionFactory = buildSessionFactory();
 
@@ -37,7 +59,7 @@ public abstract class DAO <T,M> { //T为Dao的类型，M为Model类型
 	public M findById(Integer id) {
 		M rs = null;
 		Session session = sessionFactory.openSession();
-		rs = (M) session.get(modelClass.getClass(), id);
+		rs = (M) session.get(getEntityClass(), id);
 		return rs;
 	}
 
@@ -52,7 +74,7 @@ public abstract class DAO <T,M> { //T为Dao的类型，M为Model类型
 		if (null != ids) {
 			Session session = sessionFactory.openSession();
 			for (int i : ids) {
-				M returnAction = (M) session.get(modelClass.getClass(), i);
+				M returnAction = (M) session.get(getEntityClass(), i);
 				rs.add(returnAction);
 				if (returnAction == null) {
 					LogUtil.debug("returnAction return NULL");
@@ -104,7 +126,7 @@ public abstract class DAO <T,M> { //T为Dao的类型，M为Model类型
 		Session session = sessionFactory.openSession();
 		Transaction tran = session.beginTransaction();
 		StringBuilder sb = new StringBuilder();
-		sb.append("from "+ modelName +" ");
+		sb.append("from "+ getEntityClass().getSimpleName() +" ");
 		LogUtil.info(sb.toString());
 		if(null != where && where.length() > 0){
 			sb.append("where ");
@@ -136,7 +158,7 @@ public abstract class DAO <T,M> { //T为Dao的类型，M为Model类型
 		Session session = sessionFactory.openSession();
 		Transaction tran = session.beginTransaction();
 		StringBuilder sb = new StringBuilder();
-		sb.append("from "+ modelName +" ");
+		sb.append("from "+ getEntityClass().getSimpleName() +" ");
 		Query q = session.createQuery(sb.toString());
 		try{
 			rs =  q.list();
@@ -268,6 +290,21 @@ public abstract class DAO <T,M> { //T为Dao的类型，M为Model类型
 				.buildServiceRegistry();
 		SessionFactory sf = configuration.buildSessionFactory(serviceRegistry);
 		return sf;
+	}
+
+
+	/**
+	 * @return the sessionFactory
+	 */
+	public static SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	/**
+	 * @param sessionFactory the sessionFactory to set
+	 */
+	public static void setSessionFactory(SessionFactory sessionFactory) {
+		DAO.sessionFactory = sessionFactory;
 	}
 
 }

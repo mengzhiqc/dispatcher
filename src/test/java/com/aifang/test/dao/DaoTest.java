@@ -51,27 +51,27 @@ public class DaoTest extends BasicTestCase {
 //		}
 //	}
 	
-//	public void testInsertOne(){
-//		UserDao userDao = (UserDao)getBean("userDao");
-//		Users forkUser = UserFork.forkLenyemeng();
-//		userDao.deleteUserByUserName(forkUser.getUsername());
-//		userDao.insertOne(forkUser);
-//		Users findUser = userDao.getUserInfoByUsername(forkUser.getUsername());
-//		Assert.assertEquals(forkUser.getEmail(), findUser.getEmail());
-//		userDao.deleteUserByUserName(forkUser.getUsername());
-//		
-//	}
-//	
-//	public void testFindByWhere(){
-//		UserDao userDao = (UserDao)getBean("userDao");
-//		Users forkUser = UserFork.forkLenyemeng();
-//		userDao.insertOne(forkUser);
-//		HashMap<String,String> where = new HashMap<String,String>(){{
-//			put("username","lenyemeng");
-//		}};
-//		List userList = userDao.findByWhere((HashMap)null);
-//		Assert.assertEquals(true, (userList.size()>0));
-//		List userList1 = userDao.findByWhere(where);
-//		Assert.assertEquals(1, userList1.size());
-//	}
+	public void testInsertOne(){
+		UserDao userDao = (UserDao)getBean("userDao");
+		Users forkUser = UserFork.forkLenyemeng();
+		userDao.deleteUserByUserName(forkUser.getUsername());
+		userDao.insertOne(forkUser);
+		Users findUser = userDao.getUserInfoByUsername(forkUser.getUsername());
+		Assert.assertEquals(forkUser.getEmail(), findUser.getEmail());
+		userDao.deleteUserByUserName(forkUser.getUsername());
+		
+	}
+	
+	public void testFindByWhere(){
+		UserDao userDao = (UserDao)getBean("userDao");
+		Users forkUser = UserFork.forkLenyemeng();
+		userDao.insertOne(forkUser);
+		HashMap<String,String> where = new HashMap<String,String>(){{
+			put("username","lenyemeng");
+		}};
+		List userList = userDao.findByWhere((HashMap)null);
+		Assert.assertEquals(true, (userList.size()>0));
+		List userList1 = userDao.findByWhere(where);
+		Assert.assertEquals(1, userList1.size());
+	}
 }
