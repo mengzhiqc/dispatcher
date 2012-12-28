@@ -1,10 +1,10 @@
 package com.aifang.dao;
 
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.xwork.StringUtils;
 import org.hibernate.Query;
@@ -17,7 +17,14 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import com.aifang.util.LogUtil;
 
-public abstract class DAO {
+public abstract class DAO <T,M> { //T为Dao的类型，M为Model类型
+	private M modelClass;
+	private String modelName = modelClass.getClass().getSimpleName();
+	
+
+	protected DAO(){
+		
+	}
 
 	protected static SessionFactory sessionFactory = buildSessionFactory();
 
@@ -27,10 +34,10 @@ public abstract class DAO {
 	 * @param id
 	 * @return
 	 */
-	public Object findById(Integer id) {
-		Object rs = null;
+	public M findById(Integer id) {
+		M rs = null;
 		Session session = sessionFactory.openSession();
-		rs = session.get(getClass(), id);
+		rs = (M) session.get(modelClass.getClass(), id);
 		return rs;
 	}
 
@@ -38,15 +45,14 @@ public abstract class DAO {
 	 * 通过ID序列查询结果集
 	 * 
 	 * @param List <Integer> ids
-	 * @return List<Object>
+	 * @return List<M> rs
 	 */
-	public List<Object> findByIds(List<Integer> ids) {
-		List<Object> rs = new LinkedList<Object>();
-		LogUtil.debug(ids.toString());
+	public List<M> findByIds(List<Integer> ids) {
+		List<M> rs = null ;
 		if (null != ids) {
 			Session session = sessionFactory.openSession();
 			for (int i : ids) {
-				Object returnAction = session.get(getClass(), i);
+				M returnAction = (M) session.get(modelClass.getClass(), i);
 				rs.add(returnAction);
 				if (returnAction == null) {
 					LogUtil.debug("returnAction return NULL");
@@ -54,43 +60,55 @@ public abstract class DAO {
 					LogUtil.debug(returnAction.toString());
 				}
 			}
+			if(rs.isEmpty()){
+				rs = Collections.emptyList();
+			}
+		}else{
+			rs = Collections.emptyList();
 		}
+		
+		
 		return rs;
 	}
 
 	/**
 	 * 根据条件获取查询列表
-	 * @param where
-	 * @return
+	 * @param HashMap<String,String> where
+	 * @return List<M> rs
+	 * TODO 安全隐患：查询条件直接用字符拼接
 	 */
-	public List<Object> findByWhere(HashMap<String, String> where) {
-		List<Object> rs = new LinkedList<Object>();
-		if(null != where && where.size() > 0){
-			Iterator it = (Iterator)where.entrySet().iterator();
+	public List<M> findByWhere(HashMap<String, String> where) {
+		List<M> rs ;
+		if(null == where || where.isEmpty()){
+			rs = this.findAll();
+		}else {
 			List<String> conditionList = new LinkedList<String>();
-			while(it.hasNext()){
-				Map.Entry<String,String> entry = (Map.Entry<String,String>)it.next();
+			for(Entry<String,String> entry:where.entrySet()){
 				Object key = entry.getKey();
 				Object value = entry.getValue();
 				conditionList.add(key+"='"+value+"'");
 			}
+			
 			rs = this.findByWhere(StringUtils.join(conditionList," and "));
 		}
-		
 		return rs;
 	}
 	
-	public List<Object> findByWhere(Object where){
-		List<Object> rs = new LinkedList<Object>();
+	/**
+	 * 根据String类型的条件查询列表
+	 * @param String where
+	 * @return List<M> rs
+	 */
+	public List<M> findByWhere(String where){
+		List<M> rs = null ;
 		Session session = sessionFactory.openSession();
 		Transaction tran = session.beginTransaction();
 		StringBuilder sb = new StringBuilder();
-		sb.append("from "+getClass().getSimpleName()+" ");
-		LogUtil.debug(sb.toString());
-		if(where instanceof String  && ((String)where).length() > 0){
+		sb.append("from "+ modelName +" ");
+		LogUtil.info(sb.toString());
+		if(null != where && where.length() > 0){
 			sb.append("where ");
 			sb.append(where);
-			System.out.println(sb.toString());
 		}
 		Query q = session.createQuery(sb.toString());
 		try{
@@ -107,9 +125,41 @@ public abstract class DAO {
 		}
 		return rs;
 	}
+	
+	
+	/**
+	 * 查询所有数据
+	 * @return List<M> rs
+	 */
+	public List<M> findAll(){
+		List<M> rs = null ;
+		Session session = sessionFactory.openSession();
+		Transaction tran = session.beginTransaction();
+		StringBuilder sb = new StringBuilder();
+		sb.append("from "+ modelName +" ");
+		Query q = session.createQuery(sb.toString());
+		try{
+			rs =  q.list();
+			tran.commit();
+			return rs;
+		}catch (RuntimeException e) {
+			if (tran != null) {
+				tran.rollback();
+			}
+		} finally {
+			session.flush();
+			session.close();
+		}
+		return rs;
+	}
 
-	public Object insertOne(Object model) {
-		Object rs = new Object();
+	/**
+	 * 插入一条纪录
+	 * @param M model
+	 * @return M rs;
+	 */
+	public M insertOne(M model) {
+		M rs = null ;
 		LogUtil.info("Now Insert Model :" + model.toString());
 		if (null != model) {
 			Session session = sessionFactory.openSession();
@@ -130,8 +180,13 @@ public abstract class DAO {
 		return rs;
 	}
 
-	public Object updateOne(Object model) {
-		Object rs = new Object();
+	/**
+	 * 更新一条记录
+	 * @param M model
+	 * @return M rs
+	 */
+	public Object updateOne(M model) {
+		M rs = null ;
 		LogUtil.info("Now Update Model :" + model.toString());
 		if (null != model) {
 			Session session = sessionFactory.openSession();
@@ -152,7 +207,11 @@ public abstract class DAO {
 		return rs;
 	}
 
-	public void delete(Object model) {
+	/**
+	 * 删除记录
+	 * @param M model
+	 */
+	public void delete(M model) {
 		LogUtil.info("Now Update Model :" + model.toString());
 		if (null != model) {
 			Session session = sessionFactory.openSession();
@@ -171,6 +230,11 @@ public abstract class DAO {
 		}
 	}
 
+	
+	/**
+	 * truncate数据表
+	 * @param String tableName
+	 */
 	public void truncateTable(String tableName) {
 		LogUtil.info("Warnning: Talbe" + tableName + "will be truncated");
 		if (null != tableName) {

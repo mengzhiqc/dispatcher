@@ -1,36 +1,34 @@
 package com.aifang.test.dao;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 
 import junit.framework.Assert;
 
+import com.aifang.dao.UserDao;
 import com.aifang.model.Users;
 import com.aifang.test.fork.UserFork;
 import com.aifang.util.BasicTestCase;
-import com.aifang.util.LogUtil;
 
 public class DaoTest extends BasicTestCase {
 
 	public void testFindById(){
-		Users users = (Users) getBean("users");
+		UserDao userDao = (UserDao)getBean("userDao");
 		Users forkUser = UserFork.forkLenyemeng();
-		users.deleteUserByUserName(forkUser.getUsername());
-		users.addUser(forkUser);
-		Integer userId = users.getUserInfoByUsername(forkUser.getUsername()).getId();
-		Users toCheckUser = (Users)users.findById(userId);
+		userDao.deleteUserByUserName(forkUser.getUsername());
+		userDao.addUser(forkUser);
+		Integer userId = userDao.getUserInfoByUsername(forkUser.getUsername()).getId();
+		Users toCheckUser = userDao.findById(userId);
 		Assert.assertEquals(toCheckUser.getEmail(), forkUser.getEmail());
-		users.deleteUserByUserName(forkUser.getUsername());
+		userDao.deleteUserByUserName(forkUser.getUsername());
 
 	}
 	
 	/**
 	 * TODO：由于目前插入方式不正确，所以这个测试用例比较作鸡
 	 */
-	public void testFindByIds(){
+//	public void testFindByIds(){
 //		Users users = (Users)getBean("users");
 //		users.truncateTable(users.getClass().getName().toLowerCase());
 //		List<Users> get4P = UserFork.fork4Persons();
@@ -51,28 +49,29 @@ public class DaoTest extends BasicTestCase {
 //		Assert.assertNotNull(user97);
 //		users.truncateTable(users.getClass().getName().toLowerCase());
 //		}
-	}
+//	}
 	
-	public void testInsertOne(){
-		Users forkUser = UserFork.forkLenyemeng();
-		Users users = (Users) getBean("users");
-		users.deleteUserByUserName(forkUser.getUsername());
-		users.insertOne(forkUser);
-		Users findUser = users.getUserInfoByUsername(forkUser.getUsername());
-		Assert.assertEquals(forkUser.getEmail(), findUser.getEmail());
-		users.deleteUserByUserName(forkUser.getUsername());
-		
-	}
-	
-	public void testFindByWhere(){
-		Users forkUser = UserFork.forkLenyemeng();
-		Users users = (Users)getBean("users");
-		users.insertOne(forkUser);
-		HashMap<String,String> where = new HashMap<String,String>();
-		where.put("username","lenyemeng");
-		List userList = users.findByWhere(null);
+//	public void testInsertOne(){
+//		UserDao userDao = (UserDao)getBean("userDao");
+//		Users forkUser = UserFork.forkLenyemeng();
+//		userDao.deleteUserByUserName(forkUser.getUsername());
+//		userDao.insertOne(forkUser);
+//		Users findUser = userDao.getUserInfoByUsername(forkUser.getUsername());
+//		Assert.assertEquals(forkUser.getEmail(), findUser.getEmail());
+//		userDao.deleteUserByUserName(forkUser.getUsername());
+//		
+//	}
+//	
+//	public void testFindByWhere(){
+//		UserDao userDao = (UserDao)getBean("userDao");
+//		Users forkUser = UserFork.forkLenyemeng();
+//		userDao.insertOne(forkUser);
+//		HashMap<String,String> where = new HashMap<String,String>(){{
+//			put("username","lenyemeng");
+//		}};
+//		List userList = userDao.findByWhere((HashMap)null);
 //		Assert.assertEquals(true, (userList.size()>0));
-		List userList1 = users.findByWhere(where);
-		Assert.assertEquals(1, userList1.size());
-	}
+//		List userList1 = userDao.findByWhere(where);
+//		Assert.assertEquals(1, userList1.size());
+//	}
 }

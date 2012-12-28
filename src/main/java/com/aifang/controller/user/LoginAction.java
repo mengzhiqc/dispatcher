@@ -39,7 +39,8 @@ public class LoginAction extends ActionSupport {
 
 	@Resource(name="oAuth")
 	private OAuth oAuth;
-	@Resource
+	
+	@Resource(name="loginBiz")
 	private LoginBiz loginBiz;
 
 

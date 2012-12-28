@@ -6,13 +6,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
+import com.aifang.dao.UserDao;
 import com.aifang.model.Users;
 
 @Component(value="loginBiz")
 public class LoginBiz {
 
-	@Resource
-	private Users users;
+	//@Resource
+	//private UserDao userDao;
 	
 	/**
 	 * 保存用户信息，不重复插入
@@ -21,13 +22,13 @@ public class LoginBiz {
 	 * @return boolean 成功返回true，传入null返回false
 	 */
 	public boolean saveOrUpdateUser(Users userInfo) {
-		if (null == userInfo){
-			return false;
-		}
-		List<Users> userlist = users.getUserInfosByUsername(userInfo.getUsername());
-		if(null == userlist || userlist.size() == 0){
-			users.addUser(userInfo);
-		}
+//		if (null == userInfo){
+//			return false;
+//		}
+//		List<Users> userlist = userDao.getUserInfosByUsername(userInfo.getUsername());
+//		if(null == userlist || userlist.size() == 0){
+//			userDao.addUser(userInfo);
+//		}
 		return true;
 	}
 }

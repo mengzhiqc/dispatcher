@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import com.aifang.biz.LoginBiz;
+import com.aifang.dao.UserDao;
 import com.aifang.model.Users;
 
 
@@ -23,8 +24,9 @@ import com.aifang.util.BasicTestCase;
 
 public class UsersTest {
 	
-	@Resource
-	private Users users;
+	@Resource 
+	private UserDao userDao;
+	
 	@Resource
 	private LoginBiz loginBiz;
 	
@@ -35,11 +37,11 @@ public class UsersTest {
 	@Test
 	public void testAddUser() throws Exception {
 		Users toInsertUsers = UserFork.forkLenyemeng();
-		users.deleteUserByUserName(toInsertUsers.getUsername());
-		users.addUser(toInsertUsers);
-		List<Users> userlist = users.getUserInfosByUsername(toInsertUsers.getUsername());
+		userDao.deleteUserByUserName(toInsertUsers.getUsername());
+		userDao.addUser(toInsertUsers);
+		List<Users> userlist = userDao.getUserInfosByUsername(toInsertUsers.getUsername());
 		assertEquals(1, userlist.size());
-		users.deleteUserByUserName(toInsertUsers.getUsername());
+		userDao.deleteUserByUserName(toInsertUsers.getUsername());
 	}
 	
 	/**
@@ -48,15 +50,15 @@ public class UsersTest {
 	@Test
 	public void testSaveOrUpdateUser() {
 		Users forkUser = UserFork.forkLenyemeng();
-		users.deleteUserByUserName(forkUser.getUsername());
+		userDao.deleteUserByUserName(forkUser.getUsername());
 		//测试传入null的情况
 		loginBiz.saveOrUpdateUser(null);
 		loginBiz.saveOrUpdateUser(forkUser);
-		List<Users> userlist = users.getUserInfosByUsername(forkUser.getUsername());
+		List<Users> userlist = userDao.getUserInfosByUsername(forkUser.getUsername());
 		Assert.assertNotNull(userlist);
 		Assert.assertEquals(1, userlist.size());
 		loginBiz.saveOrUpdateUser(forkUser);
-		List<Users> userlist2 = users.getUserInfosByUsername(forkUser.getUsername());
+		List<Users> userlist2 = userDao.getUserInfosByUsername(forkUser.getUsername());
 		Assert.assertNotNull(userlist2);
 		Assert.assertEquals(1, userlist2.size());
 	}
