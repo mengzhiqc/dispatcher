@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.aifang.test.user.UsersTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 78.273 sec <<< FAILURE!
+testAddUser(com.aifang.test.user.UsersTest)  Time elapsed: 78.167 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.aifang.model.Users.addUser(Users.java:80)
+	at com.aifang.test.user.UsersTest.testAddUser(UsersTest.java:20)
+

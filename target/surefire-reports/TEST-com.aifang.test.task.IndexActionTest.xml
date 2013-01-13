@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="0.552" errors="0" skipped="0" tests="1" name="com.aifang.test.task.IndexActionTest">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="D:\jdk-7u1_jre\bin"/>
+    <property name="java.vm.version" value="21.1-b02"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) Client VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="F:\myWEB\dispatcher-master1.1"/>
+    <property name="java.runtime.version" value="1.7.0_01-b08"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="basedir" value="F:\myWEB\dispatcher-master1.1"/>
+    <property name="java.endorsed.dirs" value="D:\jdk-7u1_jre\lib\endorsed"/>
+    <property name="os.arch" value="x86"/>
+    <property name="surefire.real.class.path" value="F:\myWEB\dispatcher-master1.1\target\surefire\surefirebooter3760090174502117229.jar"/>
+    <property name="java.io.tmpdir" value="C:\Users\kylin\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="D:\jdk-7u1_jre\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\app\kylin\product\11.1.0\db_1\bin;C:\Program Files\AMD APP\bin\x86;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\ATI Technologies\ATI.ACE\Core-Static;C:\Windows\System32;D:\Android\android-sdk\tools;D:\jdk1.7.0_01\jre\bin;D:\jdk1.7.0_01\bin;D:\Android\android-sdk\platform-tools;D:\MinGW\bin;D:\apache-maven-3.0.4\bin;D:\eclipse-jee-juno\eclipse\plugins\com.sysdeo.eclipse.tomcat_3.3.0;D:\Microsoft Visual Studio\Common\Tools\WinNT;D:\Microsoft Visual Studio\Common\MSDev98\Bin;D:\Microsoft Visual Studio\Common\Tools;D:\Microsoft Visual Studio\VC98\bin;;."/>
+    <property name="surefire.test.class.path" value="F:\myWEB\dispatcher-master1.1\target\test-classes;F:\myWEB\dispatcher-master1.1\target\classes;C:\Users\kylin\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;C:\Users\kylin\.m2\repository\org\apache\struts\struts2-core\2.2.1\struts2-core-2.2.1.jar;C:\Users\kylin\.m2\repository\org\apache\struts\xwork\xwork-core\2.2.1\xwork-core-2.2.1.jar;C:\Users\kylin\.m2\repository\org\freemarker\freemarker\2.3.16\freemarker-2.3.16.jar;C:\Users\kylin\.m2\repository\ognl\ognl\3.0\ognl-3.0.jar;C:\Users\kylin\.m2\repository\commons-io\commons-io\1.3.2\commons-io-1.3.2.jar;C:\Users\kylin\.m2\repository\org\apache\struts\struts2-sitemesh-plugin\2.2.1\struts2-sitemesh-plugin-2.2.1.jar;C:\Users\kylin\.m2\repository\opensymphony\sitemesh\2.4.2\sitemesh-2.4.2.jar;C:\Users\kylin\.m2\repository\org\apache\struts\struts2-spring-plugin\2.2.1\struts2-spring-plugin-2.2.1.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-beans\2.5.6\spring-beans-2.5.6.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-core\2.5.6\spring-core-2.5.6.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-context\2.5.6\spring-context-2.5.6.jar;C:\Users\kylin\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-web\2.5.6\spring-web-2.5.6.jar;C:\Users\kylin\.m2\repository\javassist\javassist\3.8.0.GA\javassist-3.8.0.GA.jar;C:\Users\kylin\.m2\repository\javax\servlet\servlet-api\2.4\servlet-api-2.4.jar;C:\Users\kylin\.m2\repository\javax\servlet\jsp-api\2.0\jsp-api-2.0.jar;C:\Users\kylin\.m2\repository\commons-fileupload\commons-fileupload\1.1.1\commons-fileupload-1.1.1.jar;C:\Users\kylin\.m2\repository\uk\ltd\getahead\dwr\1.1-beta-3\dwr-1.1-beta-3.jar;C:\Users\kylin\.m2\repository\commons-logging\commons-logging\1.0.4\commons-logging-1.0.4.jar;C:\Users\kylin\.m2\repository\org\mortbay\jetty\servlet-api\2.5.20110712\servlet-api-2.5.20110712.jar;C:\Users\kylin\.m2\repository\com\googlecode\json-simple\json-simple\1.1\json-simple-1.1.jar;C:\Users\kylin\.m2\repository\commons-codec\commons-codec\1.7\commons-codec-1.7.jar;C:\Users\kylin\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\kylin\.m2\repository\org\hibernate\hibernate-core\4.1.7.Final\hibernate-core-4.1.7.Final.jar;C:\Users\kylin\.m2\repository\antlr\antlr\2.7.7\antlr-2.7.7.jar;C:\Users\kylin\.m2\repository\org\jboss\logging\jboss-logging\3.1.0.GA\jboss-logging-3.1.0.GA.jar;C:\Users\kylin\.m2\repository\org\jboss\spec\javax\transaction\jboss-transaction-api_1.1_spec\1.0.0.Final\jboss-transaction-api_1.1_spec-1.0.0.Final.jar;C:\Users\kylin\.m2\repository\dom4j\dom4j\1.6.1\dom4j-1.6.1.jar;C:\Users\kylin\.m2\repository\org\hibernate\javax\persistence\hibernate-jpa-2.0-api\1.0.1.Final\hibernate-jpa-2.0-api-1.0.1.Final.jar;C:\Users\kylin\.m2\repository\org\javassist\javassist\3.15.0-GA\javassist-3.15.0-GA.jar;C:\Users\kylin\.m2\repository\org\hibernate\common\hibernate-commons-annotations\4.0.1.Final\hibernate-commons-annotations-4.0.1.Final.jar;C:\Users\kylin\.m2\repository\mysql\mysql-connector-java\5.1.21\mysql-connector-java-5.1.21.jar;C:\Users\kylin\.m2\repository\org\slf4j\slf4j-api\1.6.6\slf4j-api-1.6.6.jar;C:\Users\kylin\.m2\repository\org\slf4j\slf4j-simple\1.6.6\slf4j-simple-1.6.6.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-test\2.5.6\spring-test-2.5.6.jar;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="51.0"/>
+    <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\kylin"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.7"/>
+    <property name="file.encoding" value="GBK"/>
+    <property name="user.name" value="kylin"/>
+    <property name="java.class.path" value="F:\myWEB\dispatcher-master1.1\target\test-classes;F:\myWEB\dispatcher-master1.1\target\classes;C:\Users\kylin\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;C:\Users\kylin\.m2\repository\org\apache\struts\struts2-core\2.2.1\struts2-core-2.2.1.jar;C:\Users\kylin\.m2\repository\org\apache\struts\xwork\xwork-core\2.2.1\xwork-core-2.2.1.jar;C:\Users\kylin\.m2\repository\org\freemarker\freemarker\2.3.16\freemarker-2.3.16.jar;C:\Users\kylin\.m2\repository\ognl\ognl\3.0\ognl-3.0.jar;C:\Users\kylin\.m2\repository\commons-io\commons-io\1.3.2\commons-io-1.3.2.jar;C:\Users\kylin\.m2\repository\org\apache\struts\struts2-sitemesh-plugin\2.2.1\struts2-sitemesh-plugin-2.2.1.jar;C:\Users\kylin\.m2\repository\opensymphony\sitemesh\2.4.2\sitemesh-2.4.2.jar;C:\Users\kylin\.m2\repository\org\apache\struts\struts2-spring-plugin\2.2.1\struts2-spring-plugin-2.2.1.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-beans\2.5.6\spring-beans-2.5.6.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-core\2.5.6\spring-core-2.5.6.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-context\2.5.6\spring-context-2.5.6.jar;C:\Users\kylin\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-web\2.5.6\spring-web-2.5.6.jar;C:\Users\kylin\.m2\repository\javassist\javassist\3.8.0.GA\javassist-3.8.0.GA.jar;C:\Users\kylin\.m2\repository\javax\servlet\servlet-api\2.4\servlet-api-2.4.jar;C:\Users\kylin\.m2\repository\javax\servlet\jsp-api\2.0\jsp-api-2.0.jar;C:\Users\kylin\.m2\repository\commons-fileupload\commons-fileupload\1.1.1\commons-fileupload-1.1.1.jar;C:\Users\kylin\.m2\repository\uk\ltd\getahead\dwr\1.1-beta-3\dwr-1.1-beta-3.jar;C:\Users\kylin\.m2\repository\commons-logging\commons-logging\1.0.4\commons-logging-1.0.4.jar;C:\Users\kylin\.m2\repository\org\mortbay\jetty\servlet-api\2.5.20110712\servlet-api-2.5.20110712.jar;C:\Users\kylin\.m2\repository\com\googlecode\json-simple\json-simple\1.1\json-simple-1.1.jar;C:\Users\kylin\.m2\repository\commons-codec\commons-codec\1.7\commons-codec-1.7.jar;C:\Users\kylin\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\kylin\.m2\repository\org\hibernate\hibernate-core\4.1.7.Final\hibernate-core-4.1.7.Final.jar;C:\Users\kylin\.m2\repository\antlr\antlr\2.7.7\antlr-2.7.7.jar;C:\Users\kylin\.m2\repository\org\jboss\logging\jboss-logging\3.1.0.GA\jboss-logging-3.1.0.GA.jar;C:\Users\kylin\.m2\repository\org\jboss\spec\javax\transaction\jboss-transaction-api_1.1_spec\1.0.0.Final\jboss-transaction-api_1.1_spec-1.0.0.Final.jar;C:\Users\kylin\.m2\repository\dom4j\dom4j\1.6.1\dom4j-1.6.1.jar;C:\Users\kylin\.m2\repository\org\hibernate\javax\persistence\hibernate-jpa-2.0-api\1.0.1.Final\hibernate-jpa-2.0-api-1.0.1.Final.jar;C:\Users\kylin\.m2\repository\org\javassist\javassist\3.15.0-GA\javassist-3.15.0-GA.jar;C:\Users\kylin\.m2\repository\org\hibernate\common\hibernate-commons-annotations\4.0.1.Final\hibernate-commons-annotations-4.0.1.Final.jar;C:\Users\kylin\.m2\repository\mysql\mysql-connector-java\5.1.21\mysql-connector-java-5.1.21.jar;C:\Users\kylin\.m2\repository\org\slf4j\slf4j-api\1.6.6\slf4j-api-1.6.6.jar;C:\Users\kylin\.m2\repository\org\slf4j\slf4j-simple\1.6.6\slf4j-simple-1.6.6.jar;C:\Users\kylin\.m2\repository\org\springframework\spring-test\2.5.6\spring-test-2.5.6.jar;"/>
+    <property name="java.vm.specification.version" value="1.7"/>
+    <property name="sun.arch.data.model" value="32"/>
+    <property name="java.home" value="D:\jdk-7u1_jre"/>
+    <property name="sun.java.command" value="F:\myWEB\dispatcher-master1.1\target\surefire\surefirebooter3760090174502117229.jar F:\myWEB\dispatcher-master1.1\target\surefire\surefire3738126961216936592tmp F:\myWEB\dispatcher-master1.1\target\surefire\surefire429112560323476040tmp"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="1.7.0_01"/>
+    <property name="java.ext.dirs" value="D:\jdk-7u1_jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="D:\jdk-7u1_jre\lib\resources.jar;D:\jdk-7u1_jre\lib\rt.jar;D:\jdk-7u1_jre\lib\sunrsasign.jar;D:\jdk-7u1_jre\lib\jsse.jar;D:\jdk-7u1_jre\lib\jce.jar;D:\jdk-7u1_jre\lib\charsets.jar;D:\jdk-7u1_jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="localRepository" value="C:\Users\kylin\.m2\repository"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase time="0.51" classname="com.aifang.test.task.IndexActionTest" name="testIndexAction"/>
+</testsuite>e>

@@ -1,0 +1,162 @@
+package com.aifang.dao;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+
+import com.aifang.util.LogUtil;
+
+public abstract class DAO {
+
+	protected static SessionFactory sessionFactory = buildSessionFactory();
+
+	/**
+	 * 閫氳繃涓婚敭鏌ヨ
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Object findById(Integer id) {
+		Object rs = null;
+		Session session = sessionFactory.openSession();
+		rs = session.get(getClass(), id);
+		return rs;
+	}
+
+	/**
+	 * 閫氳繃ID搴忓垪鏌ヨ缁撴灉闆�	 * 
+	 * @param List
+	 *            <Integer> ids
+	 * @return List<Object>
+	 */
+	public List<Object> findByIds(List<Integer> ids) {
+		List<Object> rs = new LinkedList<Object>();
+		LogUtil.debug(ids.toString());
+		if (null != ids) {
+			Session session = sessionFactory.openSession();
+			for (int i : ids) {
+				Object returnAction = session.get(getClass(), i);
+				rs.add(returnAction);
+				if (returnAction == null) {
+					LogUtil.debug("returnAction return NULL");
+				} else {
+					LogUtil.debug(returnAction.toString());
+				}
+			}
+		}
+		return rs;
+	}
+
+	public List<Object> findByWhere(HashMap<String, String> where) {
+		List<Object> rs = new LinkedList<Object>();
+		Session session = sessionFactory.openSession();
+
+		return rs;
+	}
+
+	public Object insertOne(Object model) {
+		Object rs = new Object();
+		LogUtil.info("Now Insert Model :" + model.toString());
+		if (null != model) {
+			Session session = sessionFactory.openSession();
+			org.hibernate.Transaction tran = session.beginTransaction();
+			session.save(model);
+			try {
+				tran.commit();
+				return model;
+			} catch (RuntimeException e) {
+				if (tran != null) {
+					tran.rollback();
+				}
+			} finally {
+				session.flush();
+				session.close();
+			}
+		}
+		return rs;
+	}
+
+	public Object updateOne(Object model) {
+		Object rs = new Object();
+		LogUtil.info("Now Update Model :" + model.toString());
+		if (null != model) {
+			Session session = sessionFactory.openSession();
+			org.hibernate.Transaction tran = session.beginTransaction();
+			session.update(model);
+			try {
+				tran.commit();
+				return model;
+			} catch (RuntimeException e) {
+				if (tran != null) {
+					tran.rollback();
+				}
+			} finally {
+				session.flush();
+				session.close();
+			}
+		}
+		return rs;
+	}
+
+	public void delete(Object model) {
+		LogUtil.info("Now Update Model :" + model.toString());
+		if (null != model) {
+			Session session = sessionFactory.openSession();
+			org.hibernate.Transaction tran = session.beginTransaction();
+			session.delete(model);
+			try {
+				tran.commit();
+			} catch (RuntimeException e) {
+				if (tran != null) {
+					tran.rollback();
+				}
+			} finally {
+				session.flush();
+				session.close();
+			}
+		}
+	}
+
+	public void truncateTable(String tableName) {
+		LogUtil.info("Warnning: Talbe" + tableName + "will be truncated");
+		if (null != tableName) {
+			Session session = sessionFactory.openSession();
+			org.hibernate.Transaction tran = session.beginTransaction();
+			session.createSQLQuery("truncate table ?").setString(0, tableName);
+
+			try {
+				tran.commit();
+			} catch (RuntimeException e) {
+				if (tran != null) {
+					tran.rollback();
+				}
+			} finally {
+				session.flush();
+				session.close();
+			}
+		}
+	}
+
+	/**
+	 * 鑾峰彇hibernate鐨剓link:SessionFactory}
+	 * 
+	 * @return SessionFactory sf
+	 */
+	private static SessionFactory buildSessionFactory() {
+		Configuration configuration = new Configuration();
+		configuration.configure();
+		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
+				.applySettings(configuration.getProperties())
+				.buildServiceRegistry();
+		SessionFactory sf = configuration.buildSessionFactory(serviceRegistry);
+		return sf;
+	}
+
+}
+

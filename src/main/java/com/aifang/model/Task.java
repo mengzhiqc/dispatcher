@@ -1,5 +1,6 @@
 package com.aifang.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -7,23 +8,20 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
+import com.aifang.dao.DAO;
 import com.aifang.util.HibernateUtil;
 import com.aifang.util.TimeUtil;
 @Component(value="task")
-public class Task {
+public class Task extends DAO   implements Serializable{
 	private int id;
 	private int score;
-	private int mytinyint;
-
-	public int getMytinyint() {
-		return mytinyint;
+	private int flag;
+	public int getFlag() {
+		return flag;
 	}
-	public void setMytinyint(int mytinyint) {
-		this.mytinyint = mytinyint;
+	public void setFlag(int flag) {
+		this.flag = flag;
 	}
-
-
-
 	private String username;
 	private String create_time;
 	private String last_update_time;
@@ -44,7 +42,7 @@ public class Task {
 
 	private String taskname;
 
-	private String description;
+	
     public Task(){}
 	public String getUsername() {
 		return username;
@@ -73,30 +71,26 @@ public class Task {
 	}
 	
 	
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	
 	public void addTask(String taskname,int score,String description,String username)
 	{
 		Transaction trsn=null;
 		
-		Session session=HibernateUtil.getSessionFactory().openSession();
+		Session session=sessionFactory.openSession();
 		try{
 			         trsn=session.beginTransaction();
 			            
 			        	 Task task=new Task();
+			        	 Detail detail=new Detail();
 			        	 task.setUsername(username);
 					     task.setTaskname(taskname);				    
 					     task.setScore(score);
-					     task.setDescription(description);					    
+					     detail.setDescription(description);					    
 					     task.setCreate_time(TimeUtil.getTime());
 					     task.setLast_update_time(TimeUtil.getTime());
-					     task.setMytinyint(1);
+					     task.setFlag(1);
 					     session.save(task);
+					     session.save(detail);
 					     trsn.commit();			  
 			
 		}catch(RuntimeException e)
@@ -114,7 +108,7 @@ public class Task {
 	public List<Task> showTask(String username)
 	{
 		Transaction trsn=null;
-		Session session=HibernateUtil.getSessionFactory().openSession();
+		Session session=sessionFactory.openSession();
 		try{
 			trsn=session.beginTransaction();
 			List<Task> list=session.createQuery("from Task where uername=:username")
@@ -139,7 +133,7 @@ public class Task {
 	{
 		Transaction trsn=null;
 		Task task=null;
-		Session session=HibernateUtil.getSessionFactory().openSession();
+		Session session=sessionFactory.openSession();
 		try{
 			trsn=session.beginTransaction();
 			List<Task> list=session.createQuery("from Task where id=:id").setInteger("id", id).list();
@@ -147,17 +141,16 @@ public class Task {
 			task=list.get(0);
 			if(null!=task)
 			{
-				task.setMytinyint(0);
+				task.setFlag(0);
 			    trsn.commit();
 			}
-			else 
-				return ;
 			
 		}catch(RuntimeException e)
 		{
 			trsn.rollback();
 			
 		}finally{
+		
 			session.close();
 		}
 		
@@ -169,21 +162,19 @@ public class Task {
     {
     	Transaction trsn=null;
     	Task task=null;
-    	Session session=HibernateUtil.getSessionFactory().openSession();
+    	Session session=sessionFactory.openSession();
     	try{
     		
     		trsn=session.beginTransaction();
     		List<Task> list=session.createQuery("from Task where id=:id").setInteger("id", id).list();
     		task=list.get(0);
     		trsn.commit();
-    		if(task.getMytinyint()!=0)
+    		if( task!=null && task.getFlag()!=0)
     		{
     			return task;
     			
     		}
-    		else 
-    			return null;
-    		
+   
     	}catch(RuntimeException e)
     	{
     		trsn.rollback();
@@ -199,18 +190,22 @@ public class Task {
     	
     	Transaction trsn=null;
    	     Task task=null;
-    	Session session=HibernateUtil.getSessionFactory().openSession();
+   	     Detail detail=null;
+   	     Session session=sessionFactory.openSession();
     	try{
     		trsn=session.beginTransaction();
     		List<Task> list=session.createQuery("from Task where id=:id").setInteger("id",id).list();
     		           task=list.get(0);
+    		           List<Detail> dlist=session.createQuery("from Detail where id=:id").setInteger("id",id).list();
+    		           detail=dlist.get(0);
     		           
-    		           if(task.getMytinyint()!=0)
+    		           if(task.getFlag()!=0)
     		           {
     		           task.setTaskname(taskname);
     		           task.setScore(score);
-    		           task.setDescription(description);
+    		           detail.setDescription(description);
     		           task.setLast_update_time(TimeUtil.getTime());
+    		           
     		           trsn.commit();
     		           }
     		           

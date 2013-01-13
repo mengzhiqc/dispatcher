@@ -10,7 +10,8 @@ public class UserTest extends BasicTestCase{
 	{
 		User user=(User)getBean("user");
 		user.addUser("wangwu", "nihao", "12@12.com");
-		assertEquals("wangwu", user.getUserInforByUsername("wangwu").getUsername());
+		User u=user.getUserInforByUsername("wangwu");
+		assertEquals("wangwu", u.getUsername());
 	}
 
 /*	public void testgetUserInforByUsername() throws Exception

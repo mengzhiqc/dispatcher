@@ -1,30 +1,33 @@
 package com.aifang.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
+import com.aifang.dao.DAO;
 import com.aifang.util.HibernateUtil;
 import com.aifang.util.TimeUtil;
 @Component(value="accept")
-public class Accept {
+public class Accept extends DAO implements Serializable{
 	private int id;
-	private int mytinyint;
+	private int flag;
 	private String taskname;
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
 	public String getTaskname() {
 		return taskname;
 	}
 	public void setTaskname(String taskname) {
 		this.taskname = taskname;
 	}
-	public int getMytinyint() {
-		return mytinyint;
-	}
-	public void setMytinyint(int mytinyint) {
-		this.mytinyint = mytinyint;
-	}
+
 	private String accept_time;
 	private String username;
 	public String getUsername() {
@@ -52,13 +55,13 @@ public class Accept {
 	public void acceptTask(Task task,String username)
 	{
 		Transaction trsn=null;
-		Session session=HibernateUtil.getSessionFactory().openSession();
+		Session session=sessionFactory.openSession();
 		try{
 			trsn=session.beginTransaction();
 			Accept apt=new Accept();
 			if(task!=null)
 			{
-			apt.setMytinyint(1);
+			apt.setFlag(1);
 		    apt.setTaskname(task.getTaskname());
 			apt.setUsername(username);
 			apt.setAccept_time(TimeUtil.getTime());
@@ -80,7 +83,7 @@ public class Accept {
 	public List<Accept> showTask(String username)
 	{
 		Transaction trsn=null;
-		Session session=HibernateUtil.getSessionFactory().openSession();
+		Session session=sessionFactory.openSession();
 		try{
 			trsn=session.beginTransaction();
 			List<Accept> list=session.createQuery("from Accept where username=:username")
@@ -104,14 +107,14 @@ public class Accept {
 	{
 		Transaction trsn=null;
 		
-		Session session=HibernateUtil.getSessionFactory().openSession();
+		Session session=sessionFactory.openSession();
 		try{
 			trsn=session.beginTransaction();
 			List<Accept> list=session.createQuery("from Accept where id=:id").setInteger("id",id).list();
 			Accept  acp=list.get(0);
 			if(acp!=null)
 			{
-				acp.setMytinyint(0);
+				acp.setFlag(0);
 				trsn.commit();
 			}
 			

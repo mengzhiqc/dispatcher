@@ -1,5 +1,6 @@
 package com.aifang.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -8,11 +9,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
+import com.aifang.dao.DAO;
 import com.aifang.util.HibernateUtil;
 import com.aifang.util.MarkUtil;
 import com.aifang.util.TimeUtil;
 @Component(value="user")
-public class User {
+public class User extends DAO implements Serializable{
 	private int id;
 	private String username;
 	private String chinesename;
@@ -47,7 +49,8 @@ public class User {
 	public void addUser(String username,String chinesename,String email)
 	{
 		Transaction trsn=null;
-		Session session=HibernateUtil.getSessionFactory().openSession();
+
+		Session session=sessionFactory.openSession();
 		try{
 			trsn=session.beginTransaction();
 			 User user=new User();
@@ -72,7 +75,7 @@ public class User {
 	{
 		Transaction trsn=null;
 		User user=null;
-		Session session=HibernateUtil.getSessionFactory().openSession();
+		Session session=sessionFactory.openSession();
 		Query query=null;
 		
 		try{
